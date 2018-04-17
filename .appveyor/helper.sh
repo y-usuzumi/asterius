@@ -16,7 +16,7 @@ case "$1" in
         # c/packages/
         git submodule init
         git submodule --quiet update --recursive
-        pacman --noconfirm -S --needed git tar bsdtar binutils coreutils autoconf make xz curl libtool automake python python2 p7zip patch mingw-w64-$(uname -m)-python3-sphinx mingw-w64-$(uname -m)-tools-git mingw-w64-x86_64-cmake mingw-w64-x86_64-gcc stack
+        pacman --noconfirm -S --needed git tar bsdtar binutils coreutils autoconf make xz curl libtool automake python python2 p7zip patch mingw-w64-$(uname -m)-python3-sphinx mingw-w64-$(uname -m)-tools-git mingw-w64-x86_64-cmake mingw-w64-x86_64-gcc haskell-stack
         cd ghc
         git rev-parse HEAD > git-rev-sha1
         ;;
