@@ -115,10 +115,10 @@ workflows:
   version: 2
   build:
     jobs:
-      - asterius
-      - asterius-push-docs:
-          requires:
-            - asterius
-          filters:
-            branches:
-              only: master
+      # - asterius
+      # - asterius-push-docs:
+      #     requires:
+      #       - asterius
+      #     filters:
+      #       branches:
+      #         only: master
