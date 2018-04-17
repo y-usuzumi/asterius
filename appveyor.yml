@@ -1,18 +1,32 @@
-version: 0.0.1.{build}
+version: "{build}"
 
-shallow_clone: true
+# shallow_clone: true
+
+# environment:
+#   MAKEFLAGS: -j4
+
+build:
+  verbosity: normal
 
 environment:
-  MAKEFLAGS: -j4
+  matrix:
+  - COMPILER: msys2
+    PLATFORM: x64
+    MSYS2_ARCH: x86_64
+    MSYS2_DIR: msys64
+    MSYSTEM: MINGW64
+    BIT: 64
+
+install:
+  - cmd: |
+      bash .appveyor/helper.sh prepare
+
+cache:
+  - ghc -> ghc/git-rev-sha1
 
 build_script:
-  - choco install haskell-stack
-  - stack --no-terminal --skip-msys setup > NUL
-  - mklink /D %LOCALAPPDATA%\\Programs\\stack\\x86_64-windows\\msys2-20161025 C:\\msys64
-  - copy %LOCALAPPDATA%\\Programs\\stack\\x86_64-windows\\ghc-8.5.*.installed %LOCALAPPDATA%\\Programs\\stack\\x86_64-windows\\msys2-20161025.installed
-  - stack --no-terminal exec pacman -- -S autoconf coreutils make mingw-w64-x86_64-cmake mingw-w64-x86_64-gcc --needed --noconfirm --noprogressbar
-  - stack --no-terminal test wasm-toolkit:nir-test
-  - stack --no-terminal test asterius:fact-dump
-  - stack --no-terminal exec ahc-boot
+  - bash .appveyor/helper.sh build-ghc
+  - bash .appveyor/helper.sh build-asterius
 
+deploy: off
 test: off
