@@ -19,6 +19,7 @@ environment:
 
 install:
   - cmd: |
+      SET "PATH=C:\%MSYS2_DIR%\%MSYSTEM%\bin;C:\%MSYS2_DIR%\usr\bin;%PATH%"
       bash .appveyor/helper.sh prepare
 
 cache:
