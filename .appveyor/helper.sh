@@ -17,6 +17,11 @@ case "$1" in
         git submodule init
         git submodule --quiet update --recursive
         pacman --noconfirm -S --needed git tar bsdtar binutils coreutils autoconf make xz curl libtool automake python python2 p7zip patch mingw-w64-$(uname -m)-python3-sphinx mingw-w64-$(uname -m)-tools-git mingw-w64-x86_64-cmake mingw-w64-x86_64-gcc
+        wget -q -O - https://downloads.haskell.org/~ghc/8.4.1/ghc-8.4.1-x86_64-unknown-mingw32.tar.xz | tar -xJ -C /mingw64 --strip-components=1
+        mkdir -p /usr/local/bin
+        wget -q -O - https://www.haskell.org/cabal/release/cabal-install-1.24.0.0/cabal-install-1.24.0.0-x86_64-unknown-mingw32.zip | bsdtar -xzf- -C /usr/local/bin
+        cabal update
+        cabal install -j --prefix=/usr/local alex happy
         cd ghc
         git rev-parse HEAD > git-rev-sha1
         ;;
