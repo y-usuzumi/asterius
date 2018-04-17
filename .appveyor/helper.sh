@@ -14,8 +14,8 @@ case "$1" in
         # git config remote.origin.url git://github.com/ghc/ghc.git
         # git config --global url."git://github.com/ghc/packages-".insteadOf git://github.com/gh
         # c/packages/
-        git submodule init
-        git submodule --quiet update --recursive
+        git submodule sync
+        git submodule update --init --recursive
         pacman --noconfirm -S --needed git tar bsdtar binutils coreutils autoconf make xz curl libtool automake python python2 p7zip patch mingw-w64-$(uname -m)-python3-sphinx mingw-w64-$(uname -m)-tools-git mingw-w64-x86_64-cmake mingw-w64-x86_64-gcc
         wget -q -O - https://downloads.haskell.org/~ghc/8.4.1/ghc-8.4.1-x86_64-unknown-mingw32.tar.xz | tar -xJ -C /mingw64 --strip-components=1
         mkdir -p /usr/local/bin
