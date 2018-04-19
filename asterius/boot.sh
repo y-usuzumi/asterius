@@ -1,5 +1,9 @@
 #!/bin/sh -e
 
+printenv
+
+which perl
+
 $ASTERIUS_MKDIR_PATH -p $ASTERIUS_TMP_DIR
 
 $ASTERIUS_MKDIR_PATH -p boot-libs
