@@ -1,0 +1,77 @@
+version: 2
+
+jobs:
+  build:
+    resource_class: xlarge
+    docker:
+      - image: ubuntu:bionic
+    environment:
+      DEBIAN_FRONTEND: noninteractive
+      GHC_REV: c16382d57ed9bf51089a14f079404ff8b4ce6eb2
+      JOBS: 9
+      XZ_OPT: -9
+    steps:
+      - run:
+          name: Install dependencies
+          command: |
+            apt update
+            apt install -y software-properties-common
+            add-apt-repository -y ppa:hvr/ghc
+            add-apt-repository -y ppa:ubuntu-toolchain-r/test
+            apt update
+            apt dist-upgrade -y
+            apt install -y \
+              alex-3.1.7 \
+              autoconf \
+              automake \
+              cabal-install-2.2 \
+              clang-5.0 \
+              g++-8 \
+              ghc-8.4.3 \
+              git \
+              happy-1.19.5 \
+              libffi-dev \
+              libgmp-dev \
+              libncurses5-dev \
+              libnuma-dev \
+              libtool-bin \
+              make \
+              pkg-config \
+              python3-sphinx \
+              xz-utils \
+              zlib1g-dev
+            update-alternatives --install /usr/bin/cpp cpp /usr/bin/cpp-8 80
+            update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 80
+            update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 80
+            update-alternatives --install /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-8 80
+            update-alternatives --install /usr/bin/gcc-nm gcc-nm /usr/bin/gcc-nm-8 80
+            update-alternatives --install /usr/bin/gcc-ranlib gcc-ranlib /usr/bin/gcc-ranlib-8 80
+            update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-8 80
+            update-alternatives --install /usr/bin/gcov-dump gcov-dump /usr/bin/gcov-dump-8 80
+            update-alternatives --install /usr/bin/gcov-tool gcov-tool /usr/bin/gcov-tool-8 80
+      - run:
+          name: Initialize ghc repo
+          command: |
+            cd /tmp
+            git clone git://git.haskell.org/ghc.git
+            cd ghc
+            git checkout $GHC_REV
+            git submodule update --init --recursive
+      - checkout
+      - run:
+          name: Compile GHC
+          no_output_timeout: 1h
+          command: |
+            export PATH=$PATH:~/.cabal/bin:/opt/ghc/8.4.3/bin:/opt/cabal/2.2/bin:/opt/alex/3.1.7/bin:/opt/happy/1.19.5/bin:/usr/share/sphinx/scripts/python3
+            cabal update
+            cabal install hscolour
+            mv .circleci/build.mk /tmp/ghc/mk/
+            cd /tmp/ghc
+            ./boot
+            ./configure
+            make -j$JOBS
+            make binary-dist
+            mkdir /tmp/ghc-bindist
+            mv *.tar.* /tmp/ghc-bindist/
+      - store_artifacts:
+          path: /tmp/ghc-bindist
