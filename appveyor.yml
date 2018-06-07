@@ -8,14 +8,13 @@ environment:
 build_script:
   - cmd: |
       choco install haskell-stack
-      stack --resolver nightly setup --skip-msys > NUL
       xcopy .appveyor C:\msys64\tmp\.appveyor /i
       cd C:\msys64\tmp\.appveyor
       git clone git://git.haskell.org/ghc.git
       cd ghc
       git checkout %GHC_REV%
       git submodule update --init --recursive
-      C:\msys64\msys2_shell.cmd -mingw64 -defterm -no-start /tmp/.appveyor/build.sh
+      C:\msys64\msys2_shell.cmd -mingw64 -defterm -no-start -e /tmp/.appveyor/build.sh
 
 artifacts:
   - path: 'C:\\msys64\\tmp\\.appveyor\\ghc\\*.tar.*'
