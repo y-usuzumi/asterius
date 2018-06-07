@@ -1,0 +1,22 @@
+version: 0.0.1.{build}
+
+shallow_clone: true
+
+environment:
+  GHC_REV: c16382d57ed9bf51089a14f079404ff8b4ce6eb2
+
+build_script:
+  - cmd: |
+      choco install haskell-stack
+      stack --resolver nightly setup --skip-msys > NUL
+      conda install -y sphinx
+      xcopy .appveyor C:\msys64\tmp\
+      cd C:\msys64\tmp\.appveyor
+      git clone git://git.haskell.org/ghc.git
+      cd ghc
+      git checkout %GHC_REV%
+      git submodule update --init --recursive
+      C:\msys64\msys2_shell.cmd -mingw64 -defterm -no-start /tmp/.appveyor/build.sh
+
+artifacts:
+  - path: 'C:\\msys64\\tmp\\.appveyor\\ghc\\*.tar.*'
