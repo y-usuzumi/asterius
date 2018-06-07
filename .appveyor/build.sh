@@ -25,7 +25,7 @@ stack --skip-msys install \
     hscolour
 export PATH=$APPDATA/local/bin:$(stack path --compiler-bin --skip-msys):$PATH
 
-cd ghc
+cd /C/projects/asterius/ghc
 mv ../.appveyor/build.mk mk/
 ./boot
 ./configure --enable-tarballs-autodownload

@@ -12,7 +12,7 @@ build_script:
       cd ghc
       git checkout %GHC_REV%
       git submodule update --init --recursive
-      C:\msys64\msys2_shell.cmd -mingw64 -defterm -here -no-start -e .appveyor/build.sh
+      C:\msys64\msys2_shell.cmd -mingw64 -defterm -no-start -e /C/projects/asterius/.appveyor/build.sh
 
 artifacts:
   - path: 'ghc\*.tar.xz'
