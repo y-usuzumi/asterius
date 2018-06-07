@@ -6,6 +6,7 @@ pacman -S --needed --noconfirm --noprogressbar \
     bsdtar \
     git \
     make \
+    mingw-w64-x86_64-binutils \
     mingw-w64-x86_64-ca-certificates \
     mingw-w64-x86_64-curl \
     mingw-w64-x86_64-gcc \
