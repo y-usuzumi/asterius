@@ -9,7 +9,6 @@ build_script:
   - cmd: |
       choco install haskell-stack
       stack --resolver nightly setup --skip-msys > NUL
-      conda install -y sphinx
       xcopy .appveyor C:\msys64\tmp\
       cd C:\msys64\tmp\.appveyor
       git clone git://git.haskell.org/ghc.git
