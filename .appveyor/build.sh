@@ -25,9 +25,9 @@ stack --skip-msys install \
     hscolour
 export PATH=$APPDATA/local/bin:$(stack path --compiler-bin --skip-msys):$PATH
 
-cd /tmp/.appveyor/ghc
-mv ../build.mk mk/
+cd ghc
+mv ../.appveyor/build.mk mk/
 ./boot
 ./configure --enable-tarballs-autodownload
 make -j5
-make binary-dist
+XZ_OPT=-0 make binary-dist
