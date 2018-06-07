@@ -23,7 +23,7 @@ stack --skip-msys install \
     alex \
     happy \
     hscolour
-export PATH=~/local/bin:$(stack path --compiler-bin --skip-msys):$PATH
+export PATH=$APPDATA/local/bin:$(stack path --compiler-bin --skip-msys):$PATH
 
 cd /tmp/.appveyor/ghc
 mv ../build.mk mk/
