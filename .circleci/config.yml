@@ -17,7 +17,6 @@ jobs:
             apt update
             apt install -y software-properties-common
             add-apt-repository -y ppa:hvr/ghc
-            add-apt-repository -y ppa:ubuntu-toolchain-r/test
             apt update
             apt dist-upgrade -y
             apt install -y \
@@ -26,7 +25,7 @@ jobs:
               automake \
               cabal-install-2.2 \
               clang-5.0 \
-              g++-8 \
+              g++ \
               ghc-8.4.3 \
               git \
               happy-1.19.5 \
@@ -40,15 +39,6 @@ jobs:
               python3-sphinx \
               xz-utils \
               zlib1g-dev
-            update-alternatives --install /usr/bin/cpp cpp /usr/bin/cpp-8 80
-            update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 80
-            update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 80
-            update-alternatives --install /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-8 80
-            update-alternatives --install /usr/bin/gcc-nm gcc-nm /usr/bin/gcc-nm-8 80
-            update-alternatives --install /usr/bin/gcc-ranlib gcc-ranlib /usr/bin/gcc-ranlib-8 80
-            update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-8 80
-            update-alternatives --install /usr/bin/gcov-dump gcov-dump /usr/bin/gcov-dump-8 80
-            update-alternatives --install /usr/bin/gcov-tool gcov-tool /usr/bin/gcov-tool-8 80
       - run:
           name: Initialize ghc repo
           command: |
