@@ -3,7 +3,7 @@ version: 0.0.1.{build}
 shallow_clone: true
 
 environment:
-  GHC_REV: eb8e692cab7970c495681e14721d05ecadd21581
+  GHC_REV: bb8383149640d919df071fce248afa0d83661c4b
 
 build_script:
   - cmd: |
@@ -12,6 +12,8 @@ build_script:
       cd ghc
       git checkout %GHC_REV%
       git submodule update --init --recursive
+      cd libraries\Cabal
+      git checkout 218c7bfc8e42e888bdd151ca0c22394959006c66
       C:\msys64\msys2_shell.cmd -mingw64 -defterm -no-start -e /C/projects/asterius/.appveyor/build.sh
 
 artifacts:
